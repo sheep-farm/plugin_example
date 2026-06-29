@@ -21,7 +21,8 @@ import("sheep-farm/plugin_example")
 load "municipios.csv" as df
 
 // Porto Alegre: -30.03, -51.22
-generate df dist_capital = distance_to_point(df["latitude"], df["longitude"], -30.03, -51.22)
+let distancias = plugin_example::distance_to_point(df["latitude"], df["longitude"], -30.03, -51.22)
+generate df dist_capital = distancias
 
 reg(pib ~ escolaridade + dist_capital, df)
 ```
