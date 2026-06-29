@@ -43,8 +43,13 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist
-          cp target/${{ matrix.target }}/release/libplugin_example.${{ matrix.ext }} \
-             dist/plugin_example-${{ matrix.target }}.${{ matrix.ext }}
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            cp target/${{ matrix.target }}/release/plugin_example.dll \
+               dist/plugin_example-${{ matrix.target }}.dll
+          else
+            cp target/${{ matrix.target }}/release/libplugin_example.${{ matrix.ext }} \
+               dist/plugin_example-${{ matrix.target }}.${{ matrix.ext }}
+          fi
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v1
