@@ -1,47 +1,47 @@
 # plugin_example (hayashi-spatial)
 
-Um plugin nativo de exemplo para demonstrar a criação e empacotamento de plugins nativos da linguagem **Hayashi** usando o `hayashi-plugin-sdk`.
+An example native plugin demonstrating the creation and packaging of native plugins for the **Hayashi** language using the `hayashi-plugin-sdk`.
 
-Este plugin calcula distâncias geográficas de Haversine para análises econométricas regionais/espaciais.
+This plugin calculates Haversine geographic distances for regional/spatial econometric analyses.
 
-## Funções Disponíveis
+## Available Functions
 
 ### `distance_to_point(lats: List, lons: List, ref_lat: Float, ref_lon: Float) -> List`
-Calcula a distância (em km) de uma lista de coordenadas a um ponto fixo (como uma capital ou porto).
+Calculates the distance (in km) from a list of coordinates to a fixed point (such as a capital or port).
 
 ### `haversine_distance(lats1: List, lons1: List, lats2: List, lons2: List) -> List`
-Calcula a distância par a par entre duas listas de coordenadas.
+Calculates the pairwise distance between two lists of coordinates.
 
-## Como Usar no Hayashi
+## How to Use in Hayashi
 
 ```stata
-// Baixa, verifica a attestation e carrega o plugin automaticamente
+// Downloads, verifies build attestation, and loads the plugin automatically
 import("sheep-farm/plugin_example")
 
-load "municipios.csv" as df
+load "municipalities.csv" as df
 
 // Porto Alegre: -30.03, -51.22
-let distancias = plugin_example::distance_to_point(df["latitude"], df["longitude"], -30.03, -51.22)
-generate df dist_capital = distancias
+let distances = plugin_example::distance_to_point(df["latitude"], df["longitude"], -30.03, -51.22)
+generate df dist_capital = distances
 
-reg(pib ~ escolaridade + dist_capital, df)
+reg(pib ~ schooling + dist_capital, df)
 ```
 
-## Compilação Local (para desenvolvimento)
+## Local Compilation (for development)
 
 ```bash
 cargo build --release
-# O binário gerado estará em target/release/libplugin_example.so (ou .dll / .dylib)
+# The generated binary will be at target/release/libplugin_example.so (or .dll / .dylib)
 ```
 
-## Como Publicar um Novo Release
+## How to Publish a New Release
 
-O `hay install` baixa apenas binários gerados de forma transparente pela CI. Para publicar:
-1. Faça commit das alterações.
-2. Crie uma tag Git: `git tag v0.1.0`
-3. Dê push na tag: `git push origin v0.1.0`
-4. A Action configurada no repositório irá compilar, criar o Artifact Attestation de proveniência criptográfica do GitHub e publicar os binários nos Releases do GitHub.
+The `hay install` command downloads binaries compiled transparently by CI/CD. To publish:
+1. Commit your changes.
+2. Create a Git tag: `git tag v0.1.0`
+3. Push the tag: `git push origin v0.1.0`
+4. The GitHub Action configured in the repository will compile, create a cryptographic GitHub Artifact Attestation for build provenance, and upload the binaries to the GitHub Release.
 
-## Licença
+## License
 
 MIT
