@@ -27,7 +27,7 @@ This will download the native dynamic library pre-compiled by CI/CD and verify i
 After installation, import the package in your `.hay` script:
 
 ```text
-import("plugin_example")
+import("sheep-farm/plugin_example")
 
 load "municipalities.csv" as df
 
